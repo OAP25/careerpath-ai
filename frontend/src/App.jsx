@@ -3,7 +3,9 @@ import SuggestCareer from "./pages/SuggestCareer";
 
 export default function App() {
   return (
-    <div>
+    
+    <div><h1 className="text-4xl font-bold text-blue-600">Tailwind is working!</h1>
+
       <nav style={{ marginBottom: "1rem" }}>
         <Link to="/">Home</Link> | <Link to="/suggest">Suggest Career</Link>
       </nav>
