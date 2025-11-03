@@ -11,7 +11,7 @@ def suggest_career():
     skills = data.get("skills", "")
     goals = data.get("goals", "")
 
-    # Simple mock logic (later replaced with AI logic)
+    # Simple mock logic (replace later with AI/ML logic)
     if "code" in skills.lower() or "developer" in interests.lower():
         career = "Software Developer"
     elif "design" in interests.lower():

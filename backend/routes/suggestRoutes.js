@@ -1,41 +1,27 @@
 import express from "express";
-import { PythonShell } from "python-shell";
+import axios from "axios";
+
 const router = express.Router();
 
-router.post("/suggest", async (req, res) => {
-  const { skills, interests } = req.body;
+router.post("/", async (req, res) => {
+  try {
+    const { skills, interests } = req.body;
+    console.log("📩 Incoming data from frontend:", req.body);
 
-  const options = {
-    mode: "text",
-    pythonOptions: ["-u"],
-    scriptPath: "./", // current backend folder
-    args: [],
-  };
+    // Send data to Flask AI service
+    const response = await axios.post("http://127.0.0.1:5001/suggest-career", {
+      skills,
+      interests,
+    });
 
-  // send data to Python via stdin
-  const pyshell = new PythonShell("ai_engine.py", options);
+    console.log("🤖 Response from AI:", response.data);
 
-  let output = "";
-
-  pyshell.on("message", (message) => {
-    output += message;
-  });
-
-  pyshell.send(JSON.stringify({ skills, interests }));
-  pyshell.end((err) => {
-    if (err) {
-      console.error(err);
-      return res.status(500).json({ error: "AI processing failed" });
-    }
-
-    try {
-      const result = JSON.parse(output);
-      res.json(result);
-    } catch (parseErr) {
-      console.error(parseErr);
-      res.status(500).json({ error: "Invalid AI output" });
-    }
-  });
+    // Send Flask AI result back to frontend
+    res.json(response.data);
+  } catch (error) {
+    console.error("❌ Error connecting to AI service:", error.message);
+    res.status(500).json({ error: "AI service unavailable" });
+  }
 });
 
 export default router;

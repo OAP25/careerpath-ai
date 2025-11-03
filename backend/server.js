@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import cors from "cors";
 import mongoose from "mongoose";
 import suggestRoutes from "./routes/suggestRoutes.js";
+import aiRoutes from "./routes/aiRoutes.js";
 
 dotenv.config();
 const app = express();
@@ -10,7 +11,9 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.use("/api", suggestRoutes); // connect route
+// API routes
+app.use("/api/suggest", suggestRoutes);
+app.use("/api/ai", aiRoutes);
 
 // MongoDB connection
 mongoose
