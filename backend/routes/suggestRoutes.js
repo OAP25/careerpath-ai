@@ -1,23 +1,41 @@
 import express from "express";
+import { PythonShell } from "python-shell";
 const router = express.Router();
 
 router.post("/suggest", async (req, res) => {
   const { skills, interests } = req.body;
 
-  // simple mock AI logic (we’ll connect to Python later)
-  let suggestion = "";
+  const options = {
+    mode: "text",
+    pythonOptions: ["-u"],
+    scriptPath: "./", // current backend folder
+    args: [],
+  };
 
-  if (skills.includes("code") || interests.includes("software")) {
-    suggestion = "Software Engineer";
-  } else if (skills.includes("data") || interests.includes("analysis")) {
-    suggestion = "Data Analyst";
-  } else if (skills.includes("design") || interests.includes("creative")) {
-    suggestion = "UI/UX Designer";
-  } else {
-    suggestion = "Project Manager";
-  }
+  // send data to Python via stdin
+  const pyshell = new PythonShell("ai_engine.py", options);
 
-  res.json({ suggestion });
+  let output = "";
+
+  pyshell.on("message", (message) => {
+    output += message;
+  });
+
+  pyshell.send(JSON.stringify({ skills, interests }));
+  pyshell.end((err) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ error: "AI processing failed" });
+    }
+
+    try {
+      const result = JSON.parse(output);
+      res.json(result);
+    } catch (parseErr) {
+      console.error(parseErr);
+      res.status(500).json({ error: "Invalid AI output" });
+    }
+  });
 });
 
 export default router;
