@@ -1,24 +1,26 @@
-import sys
-import json
+from flask import Flask, jsonify, request
+from flask_cors import CORS
 
-# Read the input data sent from Node
-data = json.loads(sys.stdin.read())
+app = Flask(__name__)
+CORS(app)
 
-skills = data.get("skills", "").lower()
-interests = data.get("interests", "").lower()
+@app.route("/suggest-career", methods=["POST"])
+def suggest_career():
+    data = request.get_json()
+    interests = data.get("interests", "")
+    skills = data.get("skills", "")
+    goals = data.get("goals", "")
 
-if "code" in skills or "software" in interests:
-    suggestion = "Software Engineer"
-elif "data" in skills or "analysis" in interests:
-    suggestion = "Data Analyst"
-elif "ai" in skills or "machine" in interests:
-    suggestion = "AI Engineer"
-elif "design" in skills or "creative" in interests:
-    suggestion = "UI/UX Designer"
-elif "finance" in skills or "numbers" in interests:
-    suggestion = "Financial Analyst"
-else:
-    suggestion = "Project Manager"
+    # Simple mock logic (later replaced with AI logic)
+    if "code" in skills.lower() or "developer" in interests.lower():
+        career = "Software Developer"
+    elif "design" in interests.lower():
+        career = "UI/UX Designer"
+    else:
+        career = "Data Analyst"
 
-# Print the result (Node will read this)
-print(json.dumps({"suggestion": suggestion}))
+    return jsonify({"career": career})
+
+if __name__ == "__main__":
+    print("✅ AI Engine is running on http://127.0.0.1:5001")
+    app.run(host="127.0.0.1", port=5001, debug=True)
