@@ -1,18 +1,19 @@
-import { Routes, Route, Link } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
+import Navbar from "./components/Navbar";
+import Home from "./pages/Home";
 import SuggestCareer from "./pages/SuggestCareer";
+import Learn from "./pages/Learn";
+import About from "./pages/About";
 
 export default function App() {
   return (
-    
-    <div><h1 className="text-4xl font-bold text-blue-600">Tailwind is working!</h1>
-
-      <nav style={{ marginBottom: "1rem" }}>
-        <Link to="/">Home</Link> | <Link to="/suggest">Suggest Career</Link>
-      </nav>
-
+    <div>
+      <Navbar />
       <Routes>
-        <Route path="/" element={<h2>Welcome to CareerPath AI</h2>} />
+        <Route path="/" element={<Home />} />
         <Route path="/suggest" element={<SuggestCareer />} />
+        <Route path="/learn" element={<Learn />} />
+        <Route path="/about" element={<About />} />
       </Routes>
     </div>
   );
