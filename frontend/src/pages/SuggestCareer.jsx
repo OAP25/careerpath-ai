@@ -1,58 +1,59 @@
 import { useState } from "react";
-import API from "../api";
+import axios from "axios";
 
 export default function SuggestCareer() {
-  const [formData, setFormData] = useState({ skills: "", interests: "" });
+  const [skills, setSkills] = useState("");
+  const [interests, setInterests] = useState("");
   const [result, setResult] = useState("");
-  const [loading, setLoading] = useState(false);
-
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+  const [error, setError] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
-    try {
-      const res = await API.post("/suggest", formData);
-      setResult(res.data.suggestion);
-    } catch (error) {
-      console.error(error);
-      setResult("Error fetching suggestion.");
+    setError("");
+    setResult("");
+
+    // ✅ Input validation
+    if (!skills.trim() || !interests.trim()) {
+      setError("Please enter both skills and interests before submitting.");
+      return;
     }
-    setLoading(false);
+
+    try {
+      const response = await axios.post("http://localhost:5000/api/suggest-career", {
+        skills,
+        interests,
+      });
+      setResult(response.data.career);
+    } catch (err) {
+      setError("Failed to get a suggestion. Try again later.");
+    }
   };
 
   return (
-    <div style={{ padding: "2rem" }}>
-      <h2>AI Career Suggestion</h2>
-      <form onSubmit={handleSubmit}>
+    <div className="p-6 max-w-lg mx-auto">
+      <h2 className="text-2xl mb-4 font-semibold">Career Suggestion</h2>
+      <form onSubmit={handleSubmit} className="flex flex-col gap-3">
         <input
           type="text"
-          name="skills"
           placeholder="Enter your skills"
-          value={formData.skills}
-          onChange={handleChange}
+          value={skills}
+          onChange={(e) => setSkills(e.target.value)}
+          className="border p-2 rounded"
         />
-        <br />
         <input
           type="text"
-          name="interests"
           placeholder="Enter your interests"
-          value={formData.interests}
-          onChange={handleChange}
+          value={interests}
+          onChange={(e) => setInterests(e.target.value)}
+          className="border p-2 rounded"
         />
-        <br />
-        <button type="submit" disabled={loading}>
-          {loading ? "Getting Suggestion..." : "Suggest Career"}
+        <button type="submit" className="bg-blue-600 text-white py-2 rounded">
+          Suggest Career
         </button>
       </form>
-      {result && (
-        <div style={{ marginTop: "1rem" }}>
-          <h3>Suggested Career:</h3>
-          <p>{result}</p>
-        </div>
-      )}
+
+      {error && <p className="text-red-600 mt-4">{error}</p>}
+      {result && <p className="text-green-600 mt-4">Suggested Career: {result}</p>}
     </div>
   );
 }

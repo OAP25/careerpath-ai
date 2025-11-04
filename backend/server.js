@@ -12,7 +12,7 @@ app.use(cors());
 app.use(express.json());
 
 // API routes
-app.use("/api/suggest", suggestRoutes);
+app.use("/api/suggest-career", suggestRoutes);
 app.use("/api/ai", aiRoutes);
 
 // MongoDB connection

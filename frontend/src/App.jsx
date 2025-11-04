@@ -1,19 +1,17 @@
-import { Routes, Route } from "react-router-dom";
-import Navbar from "./components/Navbar";
-import Home from "./pages/Home";
+import { Routes, Route, Link } from "react-router-dom";
 import SuggestCareer from "./pages/SuggestCareer";
-import Learn from "./pages/Learn";
-import About from "./pages/About";
 
 export default function App() {
   return (
     <div>
-      <Navbar />
+      <nav className="p-4 bg-gray-800 text-white flex gap-4">
+        <Link to="/">Home</Link>
+        <Link to="/suggest">Suggest Career</Link>
+      </nav>
+
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<h2 className="text-center mt-8 text-2xl">Welcome to CareerPath AI</h2>} />
         <Route path="/suggest" element={<SuggestCareer />} />
-        <Route path="/learn" element={<Learn />} />
-        <Route path="/about" element={<About />} />
       </Routes>
     </div>
   );
