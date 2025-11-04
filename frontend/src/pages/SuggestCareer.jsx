@@ -4,6 +4,7 @@ import axios from "axios";
 export default function SuggestCareer() {
   const [skills, setSkills] = useState("");
   const [interests, setInterests] = useState("");
+  const [goals, setGoals] = useState(""); // Optional field if you collect goals
   const [result, setResult] = useState("");
   const [error, setError] = useState("");
 
@@ -12,7 +13,7 @@ export default function SuggestCareer() {
     setError("");
     setResult("");
 
-    // ✅ Input validation
+    // Input validation
     if (!skills.trim() || !interests.trim()) {
       setError("Please enter both skills and interests before submitting.");
       return;
@@ -22,9 +23,16 @@ export default function SuggestCareer() {
       const response = await axios.post("http://localhost:5000/api/suggest-career", {
         skills,
         interests,
+        goals,
       });
-      setResult(response.data.career);
+
+      if (response.data.success) {
+        setResult(response.data.result);
+      } else {
+        setError("Failed to get a suggestion. Try again later.");
+      }
     } catch (err) {
+      console.error(err);
       setError("Failed to get a suggestion. Try again later.");
     }
   };
@@ -47,13 +55,25 @@ export default function SuggestCareer() {
           onChange={(e) => setInterests(e.target.value)}
           className="border p-2 rounded"
         />
+        <input
+          type="text"
+          placeholder="Enter your career goals (optional)"
+          value={goals}
+          onChange={(e) => setGoals(e.target.value)}
+          className="border p-2 rounded"
+        />
         <button type="submit" className="bg-blue-600 text-white py-2 rounded">
           Suggest Career
         </button>
       </form>
 
       {error && <p className="text-red-600 mt-4">{error}</p>}
-      {result && <p className="text-green-600 mt-4">Suggested Career: {result}</p>}
+      {result && (
+        <div className="mt-6 p-4 border rounded bg-gray-50 whitespace-pre-wrap">
+          <h3 className="font-semibold mb-2">Suggested Career:</h3>
+          <p>{result}</p>
+        </div>
+      )}
     </div>
   );
 }

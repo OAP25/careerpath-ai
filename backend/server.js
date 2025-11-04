@@ -3,6 +3,9 @@ import dotenv from "dotenv";
 import cors from "cors";
 import mongoose from "mongoose";
 import suggestRoutes from "./routes/suggestRoutes.js";
+import resumeRoutes from "./routes/resumeRoutes.js";
+
+
 
 
 dotenv.config();
@@ -13,6 +16,7 @@ app.use(express.json());
 
 // API routes
 app.use("/api/suggest-career", suggestRoutes);
+app.use("/api/upload-resume", resumeRoutes);
 
 
 // MongoDB connection
