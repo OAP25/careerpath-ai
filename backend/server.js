@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 import cors from "cors";
 import mongoose from "mongoose";
 import suggestRoutes from "./routes/suggestRoutes.js";
-import aiRoutes from "./routes/aiRoutes.js";
+
 
 dotenv.config();
 const app = express();
@@ -13,7 +13,7 @@ app.use(express.json());
 
 // API routes
 app.use("/api/suggest-career", suggestRoutes);
-app.use("/api/ai", aiRoutes);
+
 
 // MongoDB connection
 mongoose
