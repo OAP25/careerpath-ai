@@ -6,25 +6,26 @@ import fs from "fs";
 const router = express.Router();
 const upload = multer({ dest: "uploads/" });
 
-// =========== RESUME ROUTE ===========
 router.post("/", upload.single("resume"), async (req, res) => {
   try {
     if (!req.file) return res.status(400).json({ error: "No file uploaded" });
 
     const filePath = req.file.path;
-    const resumeText = fs.readFileSync(filePath, "utf8"); // read file raw as text
-    fs.unlinkSync(filePath); // delete after use
 
-    // Send to ai-engine
-    const response = await axios.post("http://127.0.0.1:5001/analyze-resume", {
-      resumeText,
+    const file_data = fs.readFileSync(filePath, { encoding: "base64" });
+
+    // send base64 file to python AI
+    const response = await axios.post("http://127.0.0.1:5001/analyze-resume-file", {
+      name: req.file.originalname,
+      content: file_data
     });
 
-    return res.json(response.data);
+    fs.unlinkSync(filePath);
+    res.json(response.data);
 
-  } catch (err) {
-    console.error("Error uploading resume:", err.message);
-    return res.status(500).json({ error: "Resume processing failed" });
+  } catch (error) {
+    console.error("Resume upload error:", error.message);
+    res.status(500).json({ error: "Resume file processing failed" });
   }
 });
 

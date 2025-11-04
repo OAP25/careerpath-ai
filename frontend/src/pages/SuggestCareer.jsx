@@ -4,7 +4,7 @@ import axios from "axios";
 export default function SuggestCareer() {
   const [skills, setSkills] = useState("");
   const [interests, setInterests] = useState("");
-  const [goals, setGoals] = useState(""); // Optional field if you collect goals
+  const [goals, setGoals] = useState("");
   const [result, setResult] = useState("");
   const [error, setError] = useState("");
 
@@ -13,26 +13,19 @@ export default function SuggestCareer() {
     setError("");
     setResult("");
 
-    // Input validation
     if (!skills.trim() || !interests.trim()) {
       setError("Please enter both skills and interests before submitting.");
       return;
     }
 
     try {
-      const response = await axios.post("http://localhost:5000/api/suggest-career", {
+      const res = await axios.post("http://localhost:5000/api/suggest-career", {
         skills,
         interests,
         goals,
       });
-
-      if (response.data.success) {
-        setResult(response.data.result);
-      } else {
-        setError("Failed to get a suggestion. Try again later.");
-      }
+      setResult(res.data.result);
     } catch (err) {
-      console.error(err);
       setError("Failed to get a suggestion. Try again later.");
     }
   };
@@ -40,6 +33,7 @@ export default function SuggestCareer() {
   return (
     <div className="p-6 max-w-lg mx-auto">
       <h2 className="text-2xl mb-4 font-semibold">Career Suggestion</h2>
+
       <form onSubmit={handleSubmit} className="flex flex-col gap-3">
         <input
           type="text"
@@ -57,21 +51,23 @@ export default function SuggestCareer() {
         />
         <input
           type="text"
-          placeholder="Enter your career goals (optional)"
+          placeholder="Enter your goals (optional)"
           value={goals}
           onChange={(e) => setGoals(e.target.value)}
           className="border p-2 rounded"
         />
+
         <button type="submit" className="bg-blue-600 text-white py-2 rounded">
           Suggest Career
         </button>
       </form>
 
       {error && <p className="text-red-600 mt-4">{error}</p>}
+
       {result && (
-        <div className="mt-6 p-4 border rounded bg-gray-50 whitespace-pre-wrap">
-          <h3 className="font-semibold mb-2">Suggested Career:</h3>
-          <p>{result}</p>
+        <div className="mt-6 p-4 border rounded bg-gray-50">
+          <h2 className="font-semibold mb-2">Suggested Career:</h2>
+          <p className="whitespace-pre-line">{result}</p>
         </div>
       )}
     </div>

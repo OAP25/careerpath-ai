@@ -19,11 +19,17 @@ router.post("/", async (req, res) => {
   }
 });
 
-// ---- Analyze Resume ----
+// ---- Analyze Resume TEXT ----
 router.post("/resume", async (req, res) => {
   try {
-    const formData = req.body;
-    const response = await axios.post("http://127.0.0.1:5001/analyze-resume", formData);
+    const { resumeText } = req.body;     // <-- must extract this ONLY
+
+    console.log("received resumeText length:", resumeText?.length);
+
+    const response = await axios.post("http://127.0.0.1:5001/analyze-resume", {
+      resumeText,                         // <-- must send exactly this key
+    });
+
     res.json(response.data);
   } catch (error) {
     console.error("Error analyzing resume:", error.message);

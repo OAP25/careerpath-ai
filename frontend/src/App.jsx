@@ -7,7 +7,7 @@ export default function App() {
     <div>
       <nav className="p-4 bg-gray-800 text-white flex gap-4">
         <Link to="/">Home</Link>
-        <Link to="/suggest-career">Suggest Career</Link>
+        <Link to="/suggest">Suggest Career</Link>
         <Link to="/upload-resume">Analyze Resume</Link> {/* Add link for resume */}
       </nav>
 
