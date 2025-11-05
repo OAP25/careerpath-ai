@@ -1,61 +1,61 @@
+import { Link } from "react-router-dom";
+
 export default function CloudDevOpsRoadmap() {
   return (
-    <div className="p-10 text-gray-200 bg-black min-h-screen">
-      <h1 className="text-3xl font-bold mb-6">Cloud / DevOps Engineer Roadmap</h1>
+    <div
+      className="min-h-screen bg-black text-gray-200 px-10 py-14 bg-cover bg-center relative"
+      style={{ backgroundImage: "url('/bg.jpg')" }}
+    >
+      <div className="absolute inset-0 bg-black/75"></div>
 
-      <div className="space-y-6 text-gray-300">
+      <div className="relative z-10 max-w-4xl mx-auto">
 
-        <section>
-          <h2 className="text-xl font-semibold text-white mb-2">1) Prerequisites</h2>
-          <ul className="list-disc ml-6">
-            <li>Linux Fundamentals (Ubuntu recommended)</li>
-            <li>Networking Basics (DNS, NAT, Subnetting, VPN)</li>
-            <li>Git & GitHub</li>
-            <li>Basic Scripting — Python or Bash</li>
-          </ul>
-        </section>
+        <div className="flex justify-between items-center mb-6">
+          <h1 className="text-3xl font-bold text-white">Cloud / DevOps Roadmap</h1>
+          <Link to="/" className="text-gray-300 hover:text-white text-sm underline">
+            Back to Home
+          </Link>
+        </div>
 
-        <section>
-          <h2 className="text-xl font-semibold text-white mb-2">2) Core Cloud Platform Skills</h2>
-          <ul className="list-disc ml-6">
-            <li>AWS — EC2, S3, IAM, VPC</li>
-            <li>Azure — VM, Blob Storage, VNets</li>
-            <li>GCP — Compute Engine, Cloud Storage</li>
-            <li>Load Balancers, Auto Scaling, Security Groups</li>
-            <li>Monitoring + Cost Optimization</li>
-          </ul>
-        </section>
+        <div className="space-y-6 text-gray-300">
 
-        <section>
-          <h2 className="text-xl font-semibold text-white mb-2">3) DevOps Core Skills</h2>
-          <ul className="list-disc ml-6">
-            <li>CI/CD Pipelines</li>
-            <li>Docker — Build, Tag, Push Images</li>
-            <li>Kubernetes — Deployments, Services, Ingress</li>
-            <li>Terraform — IaC (Infrastructure as Code)</li>
-            <li>Ansible — Configuration Management</li>
-          </ul>
-        </section>
+          <section>
+            <h2 className="text-xl font-semibold text-white mb-2">1) Core Skills</h2>
+            <ul className="list-disc ml-6">
+              <li>Linux + Networking Basics</li>
+              <li>Git + GitHub</li>
+              <li>Bash or Python scripting</li>
+            </ul>
+          </section>
 
-        <section>
-          <h2 className="text-xl font-semibold text-white mb-2">4) Monitoring / Observability</h2>
-          <ul className="list-disc ml-6">
-            <li>Prometheus + Grafana</li>
-            <li>OpenTelemetry</li>
-            <li>CloudWatch (AWS) / Azure Monitor / GCP Monitoring</li>
-          </ul>
-        </section>
+          <section>
+            <h2 className="text-xl font-semibold text-white mb-2">2) Cloud Platforms</h2>
+            <ul className="list-disc ml-6">
+              <li>AWS (EC2, S3, IAM, VPC)</li>
+              <li>Azure (VM, VNets, Blob Storage)</li>
+              <li>GCP (Compute + Cloud Storage)</li>
+            </ul>
+          </section>
 
-        <section>
-          <h2 className="text-xl font-semibold text-white mb-2">5) Certifications to Aim For</h2>
-          <ul className="list-disc ml-6">
-            <li>AWS Cloud Practitioner → AWS Solutions Architect Associate</li>
-            <li>Azure AZ-900 → AZ-104</li>
-            <li>CKA — Certified Kubernetes Administrator</li>
-            <li>AWS DevOps Engineer Professional</li>
-          </ul>
-        </section>
+          <section>
+            <h2 className="text-xl font-semibold text-white mb-2">3) DevOps Essentials</h2>
+            <ul className="list-disc ml-6">
+              <li>Docker + Kubernetes</li>
+              <li>Terraform</li>
+              <li>CI/CD Pipelines</li>
+            </ul>
+          </section>
 
+          <section>
+            <h2 className="text-xl font-semibold text-white mb-2">4) Monitoring</h2>
+            <ul className="list-disc ml-6">
+              <li>Prometheus + Grafana</li>
+              <li>OpenTelemetry</li>
+              <li>CloudWatch / Azure Monitor / GCP Metrics</li>
+            </ul>
+          </section>
+
+        </div>
       </div>
     </div>
   );
