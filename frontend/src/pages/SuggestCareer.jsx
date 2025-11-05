@@ -1,5 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
+import ResultCard from "../components/ResultCard";
+
 
 export default function SuggestCareer() {
   const [skills, setSkills] = useState("");
@@ -24,7 +26,10 @@ export default function SuggestCareer() {
         interests,
         goals,
       });
-      setResult(res.data.result);
+      let txt = res.data.result
+txt = txt.replace(/```json|```/g, "").trim();
+const parsed = JSON.parse(txt);
+setResult(parsed);
     } catch (err) {
       setError("Failed to get a suggestion. Try again later.");
     }
@@ -64,12 +69,8 @@ export default function SuggestCareer() {
 
       {error && <p className="text-red-600 mt-4">{error}</p>}
 
-      {result && (
-        <div className="mt-6 p-4 border rounded bg-gray-50">
-          <h2 className="font-semibold mb-2">Suggested Career:</h2>
-          <p className="whitespace-pre-line">{result}</p>
-        </div>
-      )}
+     {result && <ResultCard data={result} />}
+
     </div>
   );
 }
