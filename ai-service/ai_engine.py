@@ -28,24 +28,29 @@ def suggest_career():
         goals = data.get("goals", "")
 
         prompt = f"""
-Return STRICT JSON only. No markdown. No explanation.
+You are a senior career consultant.
 
-User:
+Based on this user:
+
 Interests: {interests}
 Skills: {skills}
-Goals: {goals}
+Career Goals: {goals}
 
-Response Format:
-{{
-  "career": "short career title",
-  "skills": ["skill1","skill2","skill3"],
-  "strengths": ["strength1","strength2"],
-  "roles": ["role1","role2"],
-  "gaps": ["gap1","gap2"],
-  "recommendation": "120+ word detailed recommendation paragraph",
-  "fit_score": 0-100 (number only)
-}}
+Generate the career analysis STRICTLY in this structure:
+
+1) TOP 3 Career Tracks (Ranked)
+- #1: <Career name> — short reason (1 line)
+- #2: <Career name> — short reason (1 line)
+- #3: <Career name> — short reason (1 line)
+
+2) Final Recommendation (100+ words)
+Write a personalized decision-making paragraph explaining which one is BEST for this user and why.
+
+3) Next 5 Action Steps (bullet points)
+Use short, crisp bullets.
 """
+
+
         model = genai.GenerativeModel(MODEL)
         response = model.generate_content(prompt)
 

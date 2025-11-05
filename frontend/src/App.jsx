@@ -14,27 +14,30 @@ import CloudDevOpsRoadmap from "./pages/learning/CloudDevOpsRoadmap";
 
 export default function App() {
   return (
-    <div>
+    <div className="min-h-screen bg-black text-gray-200 flex flex-col">
+
       <nav className="p-4 bg-gray-800 text-white flex gap-4">
         <Link to="/">Home</Link>
-        <Link to="/suggest">Suggest Career</Link>
-        <Link to="/upload-resume">Analyze Resume</Link>
-        <Link to="/learn">Learning Center</Link> {/* <- FIXED */}
-        
-
       </nav>
 
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/suggest" element={<SuggestCareer />} />
         <Route path="/upload-resume" element={<ResumeUpload />} />
-        <Route path="/learn" element={<LearningCenter />} />
         <Route path="/learn/sde" element={<SdeRoadmap />} />
         <Route path="/learn/data-analyst" element={<DataAnalystRoadmap />} />
         <Route path="/learn/ml-ai" element={<MLAIRoadmap />} />
         <Route path="/learn/cloud-devops" element={<CloudDevOpsRoadmap />} />
 
       </Routes>
+      <footer className="bg-black text-gray-500 py-6 text-center text-sm border-t border-gray-800">
+
+  <p>© {new Date().getFullYear()} CareerPath AI. All Rights Reserved.</p>
+  <p className="mt-1 text-gray-600">
+    Built with ambition. Designed for students who aim high.
+  </p>
+</footer>
+
     </div>
   );
 }
