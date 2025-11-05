@@ -5,6 +5,8 @@ import LearningCenter from "./pages/learning/LearningCenter";
 import SdeRoadmap from "./pages/learning/SdeRoadmap";
 import DataAnalystRoadmap from "./pages/learning/DataAnalystRoadmap";
 import MLAIRoadmap from "./pages/learning/MLAIRoadmap";
+import CloudDevOpsRoadmap from "./pages/learning/CloudDevOpsRoadmap";
+
 
 
 
@@ -17,6 +19,8 @@ export default function App() {
         <Link to="/suggest">Suggest Career</Link>
         <Link to="/upload-resume">Analyze Resume</Link>
         <Link to="/learn">Learning Center</Link> {/* <- FIXED */}
+        
+
       </nav>
 
       <Routes>
@@ -27,6 +31,8 @@ export default function App() {
         <Route path="/learn/sde" element={<SdeRoadmap />} />
         <Route path="/learn/data-analyst" element={<DataAnalystRoadmap />} />
         <Route path="/learn/ml-ai" element={<MLAIRoadmap />} />
+        <Route path="/learn/cloud-devops" element={<CloudDevOpsRoadmap />} />
+
       </Routes>
     </div>
   );
