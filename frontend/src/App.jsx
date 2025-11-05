@@ -1,4 +1,5 @@
 import { Routes, Route, Link } from "react-router-dom";
+import Home from "./pages/Home";
 import SuggestCareer from "./pages/SuggestCareer";
 import ResumeUpload from "./pages/ResumeAnalysis"; // Import the new component
 import LearningCenter from "./pages/learning/LearningCenter";
@@ -24,7 +25,7 @@ export default function App() {
       </nav>
 
       <Routes>
-        <Route path="/" element={<h2 className="text-center mt-8 text-2xl">Welcome to CareerPath AI</h2>} />
+        <Route path="/" element={<Home />} />
         <Route path="/suggest" element={<SuggestCareer />} />
         <Route path="/upload-resume" element={<ResumeUpload />} />
         <Route path="/learn" element={<LearningCenter />} />
