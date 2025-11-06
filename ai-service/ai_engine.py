@@ -131,5 +131,7 @@ Return STRICT JSON:
 
 # ------------------- RUN -------------------
 if __name__ == "__main__":
-    print("✅ Gemini AI Engine running http://127.0.0.1:5001")
-    app.run(host="127.0.0.1", port=5001, debug=True)
+    port = int(os.environ.get("PORT", 5000))
+    print(f"✅ AI Engine running on port {port}")
+    app.run(host="0.0.0.0", port=port)
+
