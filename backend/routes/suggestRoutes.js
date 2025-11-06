@@ -2,12 +2,13 @@ import express from "express";
 import axios from "axios";
 
 const router = express.Router();
+const AI_URL = "https://careerpath-ai-xqw4.onrender.com";
 
 // ---- Suggest Career ----
 router.post("/", async (req, res) => {
   try {
     const { skills, interests, goals } = req.body;
-    const response = await axios.post("http://127.0.0.1:5001/suggest-career", {
+    const response = await axios.post(`${AI_URL}/suggest-career`, {
       skills,
       interests,
       goals,
@@ -22,12 +23,10 @@ router.post("/", async (req, res) => {
 // ---- Analyze Resume TEXT ----
 router.post("/resume", async (req, res) => {
   try {
-    const { resumeText } = req.body;     // <-- must extract this ONLY
+    const { resumeText } = req.body;
 
-    console.log("received resumeText length:", resumeText?.length);
-
-    const response = await axios.post("http://127.0.0.1:5001/analyze-resume", {
-      resumeText,                         // <-- must send exactly this key
+    const response = await axios.post(`${AI_URL}/analyze-resume`, {
+      resumeText,
     });
 
     res.json(response.data);

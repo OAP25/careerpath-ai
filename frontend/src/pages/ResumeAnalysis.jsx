@@ -8,6 +8,8 @@ export default function ResumeUpload() {
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
 
+  const BASE = import.meta.env.VITE_BACKEND_URL; // <- THIS IS THE URL
+
   // helper: clean and parse JSON returned by Gemini (in case it adds fences)
   const parseResultJSON = (raw) => {
     if (!raw || typeof raw !== "string") return null;
@@ -27,15 +29,17 @@ export default function ResumeUpload() {
     try {
       const fd = new FormData();
       fd.append("resume", file);
-      const res = await axios.post("http://localhost:5000/api/upload-resume", fd, {
+
+      const res = await axios.post(`${BASE}/api/upload-resume`, fd, {
         headers: { "Content-Type": "multipart/form-data" },
       });
+
       const obj = parseResultJSON(res.data.result);
-      if (!obj) return alert("AI returned invalid JSON. Try another file or try again.");
+      if (!obj) return alert("AI returned invalid JSON. Try again.");
       setResult(obj);
     } catch (err) {
       console.error(err);
-      alert("Upload failed. Check backend & AI service logs.");
+      alert("Upload failed.");
     } finally {
       setLoading(false);
     }
@@ -45,15 +49,16 @@ export default function ResumeUpload() {
     if (!text.trim()) return alert("Enter resume text first!");
     setLoading(true);
     try {
-      const res = await axios.post("http://localhost:5000/api/suggest-career/resume", {
+      const res = await axios.post(`${BASE}/api/suggest-career/resume`, {
         resumeText: text,
       });
+
       const obj = parseResultJSON(res.data.result);
-      if (!obj) return alert("AI returned invalid JSON. Edit text and try again.");
+      if (!obj) return alert("AI returned invalid JSON.");
       setResult(obj);
     } catch (err) {
       console.error(err);
-      alert("Analysis failed. Check backend & AI service logs.");
+      alert("Analysis failed.");
     } finally {
       setLoading(false);
     }
@@ -61,6 +66,7 @@ export default function ResumeUpload() {
 
   return (
     <div className="min-h-screen grid grid-cols-1 md:grid-cols-2 bg-[#343A45] text-gray-200">
+      
       {/* LEFT FORM */}
       <div className="p-10 flex flex-col justify-center max-w-xl mx-auto">
         <h2 className="text-3xl font-bold mb-6">Resume Analysis</h2>

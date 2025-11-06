@@ -9,11 +9,9 @@ export default function SuggestCareer() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const res = await axios.post("http://localhost:5000/api/suggest-career", {
-      skills,
-      interests,
-      goals,
-    });
+    const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/suggest-career`, {
+  skills, interests, goals
+});
     setResult(res.data.result); // <-- directly show text
   };
 
