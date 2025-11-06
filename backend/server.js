@@ -8,7 +8,19 @@ import resumeRoutes from "./routes/resumeRoutes.js";
 dotenv.config();
 const app = express();
 
-app.use(cors());
+app.use(cors({
+  origin: [
+    "https://careerpath-ai-kappa.vercel.app",   // your frontend
+    "http://localhost:5173"                     // local dev
+  ],
+  methods: ["GET", "POST", "OPTIONS"],
+  allowedHeaders: ["Content-Type"],
+  credentials: true
+}));
+
+// allow OPTIONS
+app.options("*", cors());
+
 app.use(express.json());
 
 // API routes
